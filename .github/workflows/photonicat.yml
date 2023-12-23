@@ -45,23 +45,23 @@ jobs:
 
       - name: Clean Build Files
         run: |
-          rm -rf ./staging_dir
-          rm -rf ./build_dir
+          rm -rf ./lede/staging_dir
+          rm -rf ./lede/build_dir
 
       - name: Prepare artifact
         run: |
           mkdir -p ./artifact/firmware
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
-          rm -rf $(find ./bin/targets/ -type d -name "packages")
-          cp -rf $(find ./bin/targets/ -type f -name "openwrt-*") ./artifact/firmware/
-          cp -rf $(find ./bin/targets/ -type f -name "sha256sums") ./artifact/firmware/
-          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
-          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
+          rm -rf $(find ./lede/bin/targets/ -type d -name "packages")
+          cp -rf $(find ./lede/bin/targets/ -type f -name "openwrt-*") ./artifact/firmware/
+          cp -rf $(find ./lede/bin/targets/ -type f -name "sha256sums") ./artifact/firmware/
+          cp -rf $(find ./lede/bin/packages/ -type f -name "*.ipk") ./artifact/package/
+          cp -rf $(find ./lede/bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
       - name: Clean Bin Files
         run: |
-          rm -rf ./bin
+          rm -rf ./lede/bin
 
       - name: Deliver buildinfo
         uses: actions/upload-artifact@v3
