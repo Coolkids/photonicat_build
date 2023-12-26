@@ -13,8 +13,10 @@ rm -rf feeds/packages/lang/golang/
 rm -rf feeds/packages/net/tailscale/
 unzip ../configs/golang.zip -d ../configs/
 unzip ../configs/tailscale.zip -d ../configs/
+unzip ../configs/quectel-cm.zip -d ../configs/
 mv ../configs/golang feeds/packages/lang/
 mv ../configs/tailscale feeds/packages/net/
+mv ../configs/quectel-cm package/lean/
 ./scripts/feeds install -a
 cp ../configs/base_config .config
 make defconfig
