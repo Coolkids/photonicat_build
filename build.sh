@@ -1,6 +1,8 @@
 #!/bin/bash
-git clone https://github.com/immortalwrt/immortalwrt.git
+git clone https://github.com/immortalwrt/immortalwrt.git /mnt/immortalwrt
+ln -s /mnt/immortalwrt ./immortalwrt
 cd immortalwrt
+df -h
 cat << EOF >> feeds.conf.default
 src-git diy1 https://github.com/xiaorouji/openwrt-passwall-packages.git;main
 src-git diy2 https://github.com/xiaorouji/openwrt-passwall.git;main
@@ -13,5 +15,6 @@ cp ../configs/rk3568-photonicat-usb30.dts target/linux/rockchip/files/arch/arm64
 cp ../configs/base_config .config
 make defconfig
 make download -j8 || make download -j1 V=s
+df -h
 rm -rf $(find ./dl/ -size -1024c)
 make -j$(nproc) || make -j1 V=s
