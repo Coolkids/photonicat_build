@@ -1,6 +1,7 @@
 #!/bin/bash
-git clone https://github.com/immortalwrt/immortalwrt.git /mnt/immortalwrt
-ln -s /mnt/immortalwrt ./immortalwrt
+sudo mkdir -p -m 777 /mnt/openwrt
+git clone https://github.com/immortalwrt/immortalwrt.git /mnt/openwrt/immortalwrt
+ln -s /mnt/openwrt/immortalwrt ./immortalwrt
 cd immortalwrt
 df -h
 cat << EOF >> feeds.conf.default
