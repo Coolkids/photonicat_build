@@ -28,11 +28,7 @@ jobs:
         run: |
           CURRENT_DATE=$(date +'%y.%m')
           # 检查标签是否存在
-          if git rev-parse -q --verify "refs/tags/v$CURRENT_DATE" >/dev/null; then
-             echo "Tag 'v$CURRENT_DATE' exists. Deleting..."
-             git tag -d "v$CURRENT_DATE"
-             git push origin --delete "v$CURRENT_DATE"
-          fi
+          ./tag.sh
           git tag -a v$CURRENT_DATE -m "Release $CURRENT_DATE"
           git push origin v$CURRENT_DATE
 
