@@ -105,9 +105,11 @@ jobs:
           repo_token: ${{ secrets.TOKEN }}
           file: ./artifact/firmware/*
           overwrite: true
-          release_name: ${{ github.ref_name }}
-          tag: ${{ github.ref_name }}
+          release_name: Release ${{ steps.create_tag.outputs.tag }}
+          tag: ${{ steps.create_tag.outputs.tag }}
           file_glob: true
+          body: |
+            Release ${{ steps.create_tag.outputs.tag }}
          
       - name: Delete loder releases
         uses: dev-drprasad/delete-older-releases@v0.3.3
