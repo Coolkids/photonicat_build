@@ -3,30 +3,38 @@ name: photonicat-build
 on:
   workflow_dispatch:
   schedule:
-      - cron: '0 0 * * 6'
-  push:
-    branches: 
-      - main
+      - cron: '0 0 15 * *'
     
 
 jobs:
-
   build_openwrt:
-
     name: Build photonicat OpenWrt firmware
-
     runs-on: ubuntu-22.04
-
     steps:
-
       - name: Checkout
         uses: actions/checkout@v4
         with:
           ref: main
+          token: ${{secrets.TOKEN}}
       
       - name: Set variables
         run: |
           sudo -E timedatectl set-timezone Asia/Shanghai
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          
+      - name: Tag release
+        id: create_tag
+        run: |
+          CURRENT_DATE=$(date +'%y.%m')
+          # 检查标签是否存在
+          if git rev-parse -q --verify "refs/tags/v$CURRENT_DATE" >/dev/null; then
+             echo "Tag 'v$CURRENT_DATE' exists. Deleting..."
+             git tag -d "v$CURRENT_DATE"
+             git push origin --delete "v$CURRENT_DATE"
+          fi
+          git tag -a v$CURRENT_DATE -m "Release $CURRENT_DATE"
+          git push origin v$CURRENT_DATE
 
       - name: Space cleanup
         env:
@@ -90,3 +98,20 @@ jobs:
         with:
           name: OpenWrt_firmware
           path: ./artifact/firmware/
+
+      - name: Upload release asset
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.TOKEN }}
+          file: ./artifact/firmware/*
+          overwrite: true
+          release_name: ${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
+          file_glob: true
+         
+      - name: Delete loder releases
+        uses: dev-drprasad/delete-older-releases@v0.3.3
+        with:
+          keep_latest: 5
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}    
