@@ -22,13 +22,14 @@ jobs:
           sudo -E timedatectl set-timezone Asia/Shanghai
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
+          CURRENT_DATE=$(date +'%y.%m')
+          # 检查标签是否存在
+          ./tag.sh
           
       - name: Tag release
         id: create_tag
         run: |
           CURRENT_DATE=$(date +'%y.%m')
-          # 检查标签是否存在
-          ./tag.sh
           git tag -a v$CURRENT_DATE -m "Release $CURRENT_DATE"
           git push origin v$CURRENT_DATE
 
