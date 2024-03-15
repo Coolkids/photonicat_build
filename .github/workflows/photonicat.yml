@@ -22,9 +22,13 @@ jobs:
           sudo -E timedatectl set-timezone Asia/Shanghai
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
-          CURRENT_DATE=$(date +'%y.%m')
-          # 检查标签是否存在
-          ./tag.sh
+          
+      - name: delete tag
+        uses: dev-drprasad/delete-tag-and-release@v1.0
+        with:
+          tag_name: v0.1.0
+          github_token: ${{ secrets.TOKEN }}
+          delete_release: true 
           
       - name: Tag release
         id: create_tag
