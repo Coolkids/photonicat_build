@@ -61,9 +61,6 @@ rm -rf ./feeds/packages/net/mosdns
 ./scripts/feeds install -p custom -f v2ray-geodata
 ./scripts/feeds install -p mosdns -f mosdns
 install_dep
-pushd ./feeds/luci
-git apply $patchs/patchs/001-luci-status-network-ifaces.patch
-popd
 }
 
 
