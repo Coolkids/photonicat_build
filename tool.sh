@@ -56,6 +56,8 @@ delete_dep
 rm -rf ./feeds/luci/applications/luci-app-passwall
 rm -rf ./feeds/packages/net/v2ray-geodata
 rm -rf ./feeds/packages/net/mosdns
+rm -rf ./feeds/packages/lang/golang
+cp -rf $patchs/patchs/golang ./feeds/packages/lang
 ./scripts/feeds install -a
 ./scripts/feeds install -p diy2 -f luci-app-passwall
 ./scripts/feeds install -p custom -f v2ray-geodata
