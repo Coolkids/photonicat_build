@@ -1,7 +1,7 @@
 #!/bin/bash
 workdir=`pwd`
 sudo mkdir -p -m 777 /mnt/openwrt
-git clone https://github.com/immortalwrt/immortalwrt.git -b openwrt-24.10 --single-branch --depth 1 /mnt/openwrt/immortalwrt
+git clone https://github.com/immortalwrt/immortalwrt.git --single-branch --depth 1 /mnt/openwrt/immortalwrt
 ln -s /mnt/openwrt/immortalwrt ./immortalwrt
 cp $workdir/tool.sh /mnt/openwrt/immortalwrt/tool.sh
 chmod +x /mnt/openwrt/immortalwrt/tool.sh
